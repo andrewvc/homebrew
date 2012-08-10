@@ -48,23 +48,26 @@ class Apollo < Formula
     plist_path.chmod 0644
   end
 
-  def caveats; <<-EOS.undent
+  def caveats
+    tod  = "~/Library/LaunchAgents"
+    to = "#{tod}/#{plist_name}"
+    from = "#{opt_prefix}/#{plist_name}"
+
+    <<-EOS.undent
     To create the broker:
-        #{bin}/apollo create #{var}/apollo
+        apollo create #{var}/apollo
 
     If this is your first install, automatically load on login with:
-        mkdir -p ~/Library/LaunchAgents
-        cp #{plist_path} ~/Library/LaunchAgents/
-        launchctl load -w ~/Library/LaunchAgents/#{plist_path.basename}
+        mkdir -p #{tod}
+        ln -s #{from} #{tod}
+        launchctl load -w #{to}
 
-    If this is an upgrade and you already have the #{plist_path.basename} loaded:
-        launchctl unload -w ~/Library/LaunchAgents/#{plist_path.basename}
-        cp #{plist_path} ~/Library/LaunchAgents/
-        launchctl load -w ~/Library/LaunchAgents/#{plist_path.basename}
+    If you just upgraded and #{name} is already loaded:
+        launchctl unload -w #{to}
+        launchctl load -w #{to}
 
     Or to start the broker in the foreground run:
         #{var}/apollo/bin/apollo-broker run
-
     EOS
   end
 

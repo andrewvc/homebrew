@@ -10,8 +10,8 @@ class Chmox < Formula
   end
 
   def caveats; <<-EOS.undent
-    Chmox.app installed to:
-      #{prefix}
+    Installed:
+        #{opt_prefix}/Chmox.app
     Use \"brew linkapps\" to symlink into ~/Applications.
     EOS
   end

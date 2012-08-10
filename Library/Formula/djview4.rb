@@ -31,7 +31,7 @@ class Djview4 < Formula
 
   def caveats; <<-EOS
     djview.app was installed in:
-      #{prefix}
+      #{opt_prefix}
 
     To symlink into ~/Applications, you can do:
       brew linkapps

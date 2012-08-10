@@ -32,11 +32,11 @@ class ClojureContrib < Formula
 For Clojure to detect the contrib libs, the following path must be in your
 CLASSPATH ENV variable:
 
-    #{prefix}/#{jar}
+    #{opt_prefix}/#{jar}
 
 To do this with bash, add the following to your ~/.profile file:
 
-    export CLASSPATH=$CLASSPATH:#{prefix}/#{jar}
+    export CLASSPATH=$CLASSPATH:#{opt_prefix}/#{jar}
     END_CAVEATS
   end
 end

@@ -177,7 +177,7 @@ class Avidemux < Formula
   def caveats; <<-EOS.undent
     The command line program avidemux2_cli gets installed in your PATH.
     The Qt gui is installed if you have Qt4, and its location is
-        #{prefix}/avidemux2.app
+        #{opt_prefix}/avidemux2.app
     You can double-click it in Finder or link it into ~/Applications with
         brew linkapps
     EOS

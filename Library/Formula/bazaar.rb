@@ -39,7 +39,7 @@ class Bazaar < Formula
 
   def caveats; <<-EOS.undent
     We've built a "standalone" version of bazaar and installed its libraries to:
-      #{libexec}
+        #{opt_prefix}/libexec
 
     We've specifically kept it out of your Python's "site-packages" folder.
     EOS

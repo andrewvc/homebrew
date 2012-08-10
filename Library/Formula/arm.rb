@@ -17,9 +17,8 @@ class Arm < Formula
     You'll need to enable the Tor Control Protocol in your torrc.
     See here for details: http://www.torproject.org/tor-manual.html.en
 
-    To configure Arm, copy the sample configuration from
-    #{share}/arm/armrc.sample
-    to ~/.armrc, adjusting as needed.
+    To configure Arm, copy the sample configuration and adjust as neeeded:
+        cp #{opt_prefix}/share/arm/armrc.sample ~/.armrc
     EOS
   end
 end

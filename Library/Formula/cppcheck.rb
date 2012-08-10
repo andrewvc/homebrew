@@ -41,19 +41,19 @@ class Cppcheck < Formula
         end
 
         system "make"
-        bin.install "cppcheck-gui.app"
+        prefix.install "cppcheck-gui.app"
       end
     end
   end
 
   def caveats; <<-EOS.undent
-    --with-gui installs cppcheck-gui.app in:
-      #{bin}
+    --with-gui installs cppcheck-gui.app to:
+      #{opt_prefix}/cppcheck-gui.app
 
     To link the application to a normal Mac OS X location:
         brew linkapps
     or:
-        ln -s #{bin}/cppcheck-gui.app /Applications
+        ln -s #{opt_prefix}/cppcheck-gui.app /Applications
     EOS
   end
 end

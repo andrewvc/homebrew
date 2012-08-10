@@ -13,16 +13,19 @@ class Beanstalk < Formula
   end
 
   def caveats
+    tod = "~/Library/LaunchAgents"
+    to = "#{tod}/#{plist_name}"
+    from = "#{opt_prefix}/#{plist_name}"
+
     <<-EOS.undent
     If this is your first install, automatically load on login with:
-        mkdir -p ~/Library/LaunchAgents
-        cp #{plist_path} ~/Library/LaunchAgents/
-        launchctl load -w ~/Library/LaunchAgents/#{plist_path.basename}
+        mkdir -p #{tod}
+        ln -s #{from} #{tod}
+        launchctl load -w #{to}
 
-    If this is an upgrade and you already have the #{plist_path.basename} loaded:
-        launchctl unload -w ~/Library/LaunchAgents/#{plist_path.basename}
-        cp #{plist_path} ~/Library/LaunchAgents/
-        launchctl load -w ~/Library/LaunchAgents/#{plist_path.basename}
+    If this is an upgrade and you already have #{plist_name} loaded:
+        launchctl unload -w #{to}
+        launchctl load -w #{to}
 
       To start beanstalk manually:
         beanstalkd

@@ -13,14 +13,14 @@ class FlexSdk < Formula
     To use the SDK you will need to:
 
     (a) add the bin folder to your $PATH:
-      #{libexec}/bin
+      #{opt_prefix}/libexec/bin
 
     (b) set $FLEX_HOME:
-      export FLEX_HOME=#{libexec}
+      export FLEX_HOME=#{opt_prefix}/libexec
 
     (c) add the tasks jar to ANT:
       mkdir -p ~/.ant/lib
-      ln -s #{libexec}/ant/lib/flexTasks.jar ~/.ant/lib
+      ln -s #{opt_prefix}/libexec/ant/lib/flexTasks.jar ~/.ant/lib
     EOS
   end
 end

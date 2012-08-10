@@ -35,7 +35,7 @@ class AndroidNdk < Formula
     http://developer.android.com/sdk/ndk/index.html#requirements
 
     For more documentation on Android NDK, please check:
-      #{prefix}/docs
+      #{HOMEBREW_PREFIX}/opt/#{name}/docs
     EOS
   end
 end

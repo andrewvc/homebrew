@@ -19,15 +19,23 @@ class CouchdbLucene < Formula
     plist_path.chmod 0644
   end
 
-  def caveats; <<-EOS.undent
-    You can enable couchdb-lucene to automatically load on login with:
+  def caveats
+    tod  = "~/Library/LaunchAgents"
+    to = "#{tod}/#{plist_name}"
+    from = "#{opt_prefix}/#{plist_name}"
 
-      mkdir -p ~/Library/LaunchAgents
-      cp "#{plist_path}" ~/Library/LaunchAgents/
-      launchctl load -w ~/Library/LaunchAgents/#{plist_path.basename}
+    <<-EOS.undent
+    If this is your first install, automatically load on login with:
+        mkdir -p #{tod}
+        ln -s #{from} #{tod}
+        launchctl load -w #{to}
+
+    If you just upgraded and #{name} is already loaded:
+        launchctl unload -w #{to}
+        launchctl load -w #{to}
 
     Or start it manually with:
-      #{bin}/run
+        #{opt_prefix}/bin/run
     EOS
   end
 

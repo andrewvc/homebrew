@@ -48,12 +48,12 @@ class Coq < Formula
 
   def caveats; <<-EOS.undent
     Coq's Emacs mode is installed into
-      #{lib}/emacs/site-lisp
+        #{opt_prefix}/lib/emacs/site-lisp
 
     To use the Coq Emacs mode, you need to put the following lines in
     your .emacs file:
-      (setq auto-mode-alist (cons '("\\.v$" . coq-mode) auto-mode-alist))
-      (autoload 'coq-mode "coq" "Major mode for editing Coq vernacular." t)
+        (setq auto-mode-alist (cons '("\\.v$" . coq-mode) auto-mode-alist))
+        (autoload 'coq-mode "coq" "Major mode for editing Coq vernacular." t)
     EOS
   end
 end

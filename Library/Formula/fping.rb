@@ -14,8 +14,7 @@ class Fping < Formula
 
   def caveats; <<-EOS.undent
     fping can only be run by root by default so either use sudo to run fping or
-        setuid root #{sbin}/fping
-
+        setuid root #{HOMEBREW_PREFIX}/sbin/fping
     EOS
   end
 

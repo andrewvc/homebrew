@@ -66,8 +66,8 @@ class Ganglia < Formula
     If you didn't have a default config file, one was created here:
       #{etc}/gmond.conf
 
-    You might want to copy these someplace served by a PHP-capable web server:
-      #{share}/ganglia/web/* to someplace
+    You might want to copy these files someplace served by a PHP-capable web server:
+      #{HOMEBREW_PREFIX}/share/ganglia/web/*
     EOS
   end
 end

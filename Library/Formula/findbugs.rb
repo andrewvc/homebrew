@@ -25,7 +25,7 @@ class Findbugs < Formula
   def caveats; <<-EOS.undent
     Some tools might refer findbugs by env variable.
     After installation, set $FINDBUGS_HOME in your profile:
-      export FINDBUGS_HOME=#{libexec}
+        export FINDBUGS_HOME="#{opt_prefix}/libexec"
     EOS
   end
 

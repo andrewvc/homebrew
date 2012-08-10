@@ -35,18 +35,24 @@ class Cassandra < Formula
     plist_path.chmod 0644
   end
 
-  def caveats; <<-EOS.undent
+  def caveats
+    tod = "~/Library/LaunchAgents"
+    to = "#{tod}/#{plist_name}"
+    from = "#{opt_prefix}/#{plist_name}"
+
+    <<-EOS.undent
     If this is your first install, automatically load on login with:
-      mkdir -p ~/Library/LaunchAgents
-      cp #{plist_path} ~/Library/LaunchAgents/
-      launchctl load -w ~/Library/LaunchAgents/#{plist_path.basename}
+        mkdir -p #{tod}
+        ln -s #{from} #{tod}
+        launchctl load -w #{to}
 
-    If you plan to use the CQL shell (cqlsh), you will need the Python CQL library
-    installed. Since Homebrew prefers using pip for Python packages, you can
-    install that using:
+    If this is an upgrade and you already have #{plist_name} loaded:
+        launchctl unload -w #{to}
+        launchctl load -w #{to}
 
-      pip install cql
-
+    If you plan to use the CQL shell (cqlsh), you will need to install the Python
+    CQL library.
+        pip install cql
     EOS
   end
 

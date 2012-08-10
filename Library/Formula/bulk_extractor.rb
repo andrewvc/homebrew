@@ -31,8 +31,8 @@ class BulkExtractor < Formula
   end
 
   def caveats; <<-EOS.undent
-    You may need to add the directory containing the Python bindings to your PYTHONPATH:
-      #{share}/bulk_extractor/python
+    You may need to add the Python bindings directory to your PYTHONPATH:
+        #{opt_prefix}/share/bulk_extractor/python
     EOS
   end
 end

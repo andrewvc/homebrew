@@ -23,13 +23,8 @@ class Ccache < Formula
   end
 
   def caveats; <<-EOS.undent
-    To install symlinks for compilers that will automatically use
-    ccache, prepend this directory to your PATH:
-      #{libexec}
-
-    If this is an upgrade and you have previously added the symlinks to
-    your PATH, you will need to modify it to the path specified above so
-    it points to the new version.
+    To use ccache _prepend_ this directory to your PATH:
+        #{opt_prefix}/libexec
 
     NOTE: ccache can prevent some software from compiling.
     EOS

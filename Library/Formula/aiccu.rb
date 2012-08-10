@@ -40,6 +40,7 @@ class Aiccu < Formula
   end
 
   def caveats
+    plist_path = "#{opt_prefix}/#{plist_name}"
     <<-EOS.undent
       You may also wish to install tuntap:
 
@@ -63,12 +64,12 @@ class Aiccu < Formula
       To launch on startup:
       * if this is your first install:
           sudo cp #{plist_path} /Library/LaunchDaemons/
-          sudo launchctl load -w /Library/LaunchDaemons/#{plist_path.basename}
+          sudo launchctl load -w /Library/LaunchDaemons/#{plist_name}
 
-      * if this is an upgrade and you already have the #{plist_path.basename} loaded:
-          sudo launchctl unload -w /Library/LaunchDaemons/#{plist_path.basename}
+      * if this is an upgrade and you already have the #{plist_name} loaded:
+          sudo launchctl unload -w /Library/LaunchDaemons/#{plist_name}
           sudo cp #{plist_path} /Library/LaunchDaemons/
-          sudo launchctl load -w /Library/LaunchDaemons/#{plist_path.basename}
+          sudo launchctl load -w /Library/LaunchDaemons/#{plist_name}
     EOS
   end
 end

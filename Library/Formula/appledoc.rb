@@ -21,7 +21,7 @@ class Appledoc < Formula
   def caveats; <<-EOS
 Make the documentation templates available to `appledoc':
 
-    ln -sf "#{prefix}/Templates" "#{ENV['HOME']}/Library/Application Support/appledoc"
+    ln -sf "#{opt_prefix}/Templates" "~/Library/Application Support/appledoc"
 
 If you have edited the templates yourself, you should check for important changes.
 

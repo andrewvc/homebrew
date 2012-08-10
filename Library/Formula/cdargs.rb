@@ -29,7 +29,7 @@ class Cdargs < Formula
 
   def caveats; <<-EOS.undent
       Support files for bash, tcsh, and emacs have been installed to:
-        #{prefix}/contrib
+          #{opt_prefix}/contrib
     EOS
   end
 end

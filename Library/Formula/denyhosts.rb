@@ -67,7 +67,7 @@ class Denyhosts < Formula
   def caveats
     <<-EOS.undent
       Unless it exists already, a denyhosts.cfg file has been written to:
-        #{etc}/denyhosts.cfg
+          #{etc}/denyhosts.cfg
 
       All DenyHosts scripts will load this file by default unless told to use
       a different one.
@@ -76,7 +76,7 @@ class Denyhosts < Formula
       /etc/hosts.deny every 10 minutes. It will need to be run by the user that
       owns /etc/hosts.deny, usually root, and can be set to load at startup
       via:
-        sudo cp #{plist_path} /Library/LaunchDaemons/
+          sudo cp #{opt_prefix}/#{plist_name} /Library/LaunchDaemons
 
     EOS
   end

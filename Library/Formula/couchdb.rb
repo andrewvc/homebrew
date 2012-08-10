@@ -43,18 +43,17 @@ class Couchdb < Formula
   def caveats; <<-EOS.undent
     If this is your first install, automatically load on login with:
         mkdir -p ~/Library/LaunchAgents
-        cp #{prefix}/Library/LaunchDaemons/org.apache.couchdb.plist ~/Library/LaunchAgents/
+        ln -s #{opt_prefix}/Library/LaunchDaemons/org.apache.couchdb.plist ~/Library/LaunchAgents
         launchctl load -w ~/Library/LaunchAgents/org.apache.couchdb.plist
 
-    If this is an upgrade and you already have the org.apache.couchdb.plist loaded:
+    If you just upgraded and org.apache.couchdb.plist is already loaded:
         launchctl unload -w ~/Library/LaunchAgents/org.apache.couchdb.plist
-        cp #{prefix}/Library/LaunchDaemons/org.apache.couchdb.plist ~/Library/LaunchAgents/
         launchctl load -w ~/Library/LaunchAgents/org.apache.couchdb.plist
 
     Alternatively, automatically run on startup as a daemon with:
         sudo launchctl list org.apache.couchdb \>/dev/null 2\>\&1 \&\& \\
           sudo launchctl unload -w /Library/LaunchDaemons/org.apache.couchdb.plist
-        sudo cp #{prefix}/Library/LaunchDaemons/org.apache.couchdb.plist /Library/LaunchDaemons/
+        sudo cp #{opt_prefix}/Library/LaunchDaemons/org.apache.couchdb.plist /Library/LaunchDaemons/
         sudo launchctl load -w /Library/LaunchDaemons/org.apache.couchdb.plist
 
     Or start manually as the current user with:

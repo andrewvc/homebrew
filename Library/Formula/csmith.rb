@@ -18,7 +18,7 @@ class Csmith < Formula
   def caveats
     <<-EOS.undent
       It is recommended that you set the environment variable 'CSMITH_PATH' to
-          #{include}/csmith-#{version}
+          #{HOMEBREW_PREFIX}/include/csmith-#{version}
     EOS
   end
 end

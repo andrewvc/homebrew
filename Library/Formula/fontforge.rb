@@ -81,7 +81,7 @@ class Fontforge < Formula
       To install the Mac OS X wrapper application run:
         brew linkapps
       or:
-        ln -s #{prefix}/FontForge.app /Applications
+        ln -s #{opt_prefix}/FontForge.app /Applications
     EOS
 
     python_caveats = <<-EOS.undent

@@ -15,7 +15,7 @@ class AwsCloudsearch < Formula
   def caveats; <<-EOS.undent
     Add these to your shell profile:
       export JAVA_HOME="$(/usr/libexec/java_home)"
-      export CS_HOME=#{prefix}
+      export CS_HOME=#{opt_prefix}
     EOS
   end
 end

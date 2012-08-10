@@ -12,11 +12,8 @@ class Autoenv < Formula
   end
 
   def caveats; <<-EOS.undent
-      Autoenv was installed to:
-       #{prefix}
-
       To finish the installation, source activate.sh in your shell:
-          source #{prefix}/activate.sh
+          source #{opt_prefix}/activate.sh
     EOS
   end
 end

@@ -38,10 +38,10 @@ class Fiwalk < Formula
 
   def caveats; <<-EOS.undent
     fiwalk's config file is located at:
-      #{share+name}/ficonfig.txt
+        #{HOMEBREW_PREFIX}/share/#{name}/ficonfig.txt
 
-    You may need to add the directory containing the Python bindings to your PYTHONPATH:
-      #{share+name}/python
+    You may need to add the Python bindings directory to your PYTHONPATH:
+        #{HOMEBREW_PREFIX}/share/#{name}/python
     EOS
   end
 end
