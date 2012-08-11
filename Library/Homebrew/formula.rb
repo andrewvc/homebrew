@@ -456,6 +456,8 @@ protected
     removed_ENV_variables = case if args.empty? then cmd.split(' ').first else cmd end
     when "xcodebuild"
       ENV.remove_cc_etc
+    when "make"
+      ENV['HOMEBREW_OPTIMIZE'] = "1"
     end
 
     if ARGV.verbose?
@@ -483,6 +485,8 @@ protected
     removed_ENV_variables.each do |key, value|
       ENV[key] = value # ENV.kind_of? Hash  # => false
     end if removed_ENV_variables
+
+    ENV.delete("HOMEBREW_OPTIMIZE")
 
   rescue
     raise BuildError.new(self, cmd, args, $?)

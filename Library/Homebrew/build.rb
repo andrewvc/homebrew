@@ -15,14 +15,11 @@ at_exit do
   begin
     raise $! if $! # an exception was already thrown when parsing the formula
 
-    require 'extend/ENV'
     require 'hardware'
     require 'keg'
+    require 'superenv'
 
-    ENV.extend(HomebrewEnvExtension)
     ENV.setup_build_environment
-    # we must do this or tools like pkg-config won't get found by configure scripts etc.
-    ENV.prepend 'PATH', "#{HOMEBREW_PREFIX}/bin", ':' unless ORIGINAL_PATHS.include? HOMEBREW_PREFIX/'bin'
 
     # Force any future invocations of sudo to require the user's password to be
     # re-entered. This is in-case any build script call sudo. Certainly this is
@@ -63,17 +60,20 @@ def install f
     if dep.keg_only?
       opt = HOMEBREW_PREFIX/:opt/dep.name
 
-      raise "#{opt} not present\nReinstall #{dep}." unless opt.directory?
+      raise "#{opt} not present\nReinstall #{dep}. Sorry :(" unless opt.directory?
 
-      ENV.prepend 'LDFLAGS', "-L#{opt}/lib"
-      ENV.prepend 'CPPFLAGS', "-I#{opt}/include"
-      ENV.prepend 'PATH', "#{opt}/bin", ':'
+      ENV.prepend_path 'PATH', "#{opt}/bin"
+      ENV.prepend_path 'PKG_CONFIG_PATH', "#{opt}/lib/pkgconfig"
+      ENV.prepend_path 'PKG_CONFIG_PATH', "#{opt}/share/pkgconfig"
+      ENV.prepend_path 'CMAKE_PREFIX_PATH', opt
 
-      pcdir = opt/'lib/pkgconfig'
-      ENV.prepend 'PKG_CONFIG_PATH', pcdir, ':' if pcdir.directory?
-
-      acdir = opt/'share/aclocal'
-      ENV.prepend 'ACLOCAL_PATH', acdir, ':' if acdir.directory?
+      if superenv?
+        ENV.prepend 'HOMEBREW_DEP_PREFIXES', dep.name
+      else
+        ENV.prepend 'LDFLAGS', "-L#{opt}/lib" if (opt/:lib).directory?
+        ENV.prepend 'CPPFLAGS', "-I#{opt}/include" if (opt/:include).directory?
+        ENV.prepend_path 'ACLOCAL_PATH', "#{opt}/share/aclocal"
+      end
     end
   end
 

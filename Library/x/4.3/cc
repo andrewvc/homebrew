@@ -1,0 +1,68 @@
+#!/bin/sh
+
+HOMEBREW_PREFIX=$(dirname $(dirname $(dirname $(cd $(dirname $0) && pwd))))
+DRIVER=`basename $0`
+CFLAGS="-pipe"
+[ $HOMEBREW_VERBOSE ] && FLAGS="-v"
+[ $HOMEBREW_UNIVERSAL ] && CFLAGS="-arch i386 -arch x86_64 $CFLAGS"
+
+for x in $HOMEBREW_DEP_PREFIXES; do
+  x="$HOMEBREW_PREFIX/opt/$x"
+  [ -d "$x/lib" ] && LDFLAGS="-L$x/lib $LDFLAGS"
+  [ -d "$x/include" ] && CPPFLAGS="-I$x/include $CPPFLAGS"
+done
+
+if [ $SDKROOT ]; then
+  # setting --sysroot removes /usr/include /usr/local/include etc. from the
+  # search paths. So we must add HOMEBREW_PREFIX/include even if /usr/local.
+  CPPFLAGS="--sysroot=$SDKROOT -I$SDKROOT/usr/include/libxml2 -I$HOMEBREW_PREFIX/include $CPPFLAGS"
+  LDFLAGS="-L$HOMEBREW_PREFIX/lib $LDFLAGS"
+else
+  if [ "$HOMEBREW_PREFIX" != "/usr/local" ]; then
+    CPPFLAGS="-I$HOMEBREW_PREFIX/include $CPPFLAGS"
+    LDFLAGS="-L$HOMEBREW_PREFIX/lib $LDFLAGS"
+  fi
+  CPPFLAGS="-I/usr/include/libxml2 $CPPFLAGS"
+fi
+
+if [ -d "/opt/X11" ]; then
+  LDFLAGS="-L/opt/X11/lib $LDFLAGS"
+  CPPFLAGS="-I/opt/X11/include -I/opt/X11/include/X11 -I/opt/X11/include/freetype2 $CPPFLAGS"
+fi
+
+case "$DRIVER" in
+cc)
+  [ $CC ] && DRIVER="$CC";;
+c++)
+  [ $CXX ] && DRIVER="$CXX";;
+esac
+
+case "$DRIVER" in
+clang*|cc|c++)
+  [ $HOMEBREW_OPTIMIZE ] && CFLAGS="-march=native -w -Os $CFLAGS"
+  # We pass linker flags to cc because most build systems make no distinction
+  # between when they call for a compiler or linker. Thus clang generates
+  # spurious warnings. TODO don't do this: may hide essential information!
+  FLAGS="$FLAGS -Qunused-arguments";;
+ld)
+  unset CPPFLAGS;;
+cpp)
+  unset LDFLAGS
+  unset CFLAGS;;
+esac
+
+#TODO bottles interrupt here, changing optimisation, removing march and adding mtune
+#TODO don't add libxml2 include path if we depend on the libxml2 formula
+#TODO auto-caveat plists
+#TODO remove -g, -O2, etc. We determine these flags
+#TODO perhaps you can also detect SDKROOT so this script can be executed without a brew wrapper
+#TODO shouldn't have this in share until brew2 since we allow repo & prefix to be different
+#TODO if errors out during fix_install_names then we should leave a flag marking keg as bad in some way at least warn user if it's a dep
+#TODO brew outdated reports old xcode/CLT/XQuartz too
+
+exec xcrun $DRIVER \
+           $FLAGS \
+           $CFLAGS \
+           $CPPFLAGS \
+           $LDFLAGS \
+           "$@"
